@@ -54,4 +54,8 @@ X  |
 ---+
 TAPE
 
+my $empty = Punched::Tape->new(bits => 2);
+is $empty->show( wide => 2 ), "\n\n", "empty";
+is $empty->show( frame => 1 ), "+--\n| \n| \n+--\n", "empty";
+
 done_testing;

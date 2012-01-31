@@ -235,19 +235,19 @@ sub track {
     my ($self, $track, %opt) = @_;
 
 	my $has_start = not defined $opt{from};
-	my $has_end = defined $self->{length} && not defined $opt{to}; 
+	my $has_end = defined $self->{length} && not defined $opt{to};
 
     $opt{from} //= 0;
     $opt{to}   //= $self->length ? $self->length - 1 : $self->pos;
     $opt{1}    //= '*';
     $opt{0}    //= ' ';
 
-	return '' if $opt{from} >= $opt{to};
+	my $t = '';
 
-	my $t = join( $opt{wide} ? ' ' : '',
+	$t = join( $opt{wide} ? ' ' : '',
         map { $opt{ $self->{data}->[$_]->[$track] } }
         ( $opt{from} .. $opt{to} )
-    );
+    ) if $opt{from} < $opt{to};
 
 	if ($opt{frame}) {
 		$t .= " |"  if $has_end;
